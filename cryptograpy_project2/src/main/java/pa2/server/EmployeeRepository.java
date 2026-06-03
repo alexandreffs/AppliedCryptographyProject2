@@ -152,7 +152,8 @@ public class EmployeeRepository implements AutoCloseable {
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setString(1, token);
             try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) result.add(map(rs));
+                while (rs.next())
+                    result.add(map(rs));
             }
         }
 
@@ -166,8 +167,9 @@ public class EmployeeRepository implements AutoCloseable {
         List<EmployeeEncrypted> result = new ArrayList<>();
 
         try (Statement st = connection.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
-            while (rs.next()) result.add(map(rs));
+                ResultSet rs = st.executeQuery(sql)) {
+            while (rs.next())
+                result.add(map(rs));
         }
 
         return result;
@@ -176,7 +178,8 @@ public class EmployeeRepository implements AutoCloseable {
     private String checkedColumn(String column) {
         return switch (column) {
             case "employee_id_index", "full_name_index", "department_id_index",
-                 "bonus_eligibility_index", "salary_ope", "age_ope" -> column;
+                    "bonus_eligibility_index", "salary_ope", "age_ope" ->
+                column;
             default -> throw new IllegalArgumentException("Unsafe or unsupported column: " + column);
         };
     }
@@ -214,8 +217,28 @@ public class EmployeeRepository implements AutoCloseable {
         return e;
     }
 
+    public long getEncryptedTableSizeBytes() throws Exception {
+        String sql = """
+                SELECT DATA_LENGTH + INDEX_LENGTH AS size_bytes
+                FROM information_schema.TABLES
+                WHERE TABLE_SCHEMA = DATABASE()
+                AND TABLE_NAME = 'employees_encrypted'
+                """;
+
+        try (Statement st = connection.createStatement();
+                ResultSet rs = st.executeQuery(sql)) {
+
+            if (rs.next()) {
+                return rs.getLong("size_bytes");
+            }
+        }
+
+        return -1;
+    }
+
     @Override
     public void close() throws Exception {
-        if (connection != null) connection.close();
+        if (connection != null)
+            connection.close();
     }
 }
