@@ -9,13 +9,7 @@ import java.math.BigInteger;
 import java.util.List;
 import java.util.Scanner;
 
-/**
- * Interactive terminal menu for testing the 11 required project operations.
- *
- * Run after Bootstrap:
- *
- * mvn exec:java -Dexec.mainClass="pa2.client.InteractiveClientApp"
- */
+// mvn exec:java -Dexec.mainClass="pa2.client.InteractiveClientApp"
 public class InteractiveClientApp {
 
     public static void main(String[] args) throws Exception {

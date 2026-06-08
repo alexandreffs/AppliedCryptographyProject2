@@ -11,15 +11,9 @@ import java.util.List;
 import java.util.Map;
 
 public final class DatasetLoader {
-    private DatasetLoader() {}
+    private DatasetLoader() {
+    }
 
-    /*
-     * Correct mapping for the uploaded CSV:
-     *
-     * employeeID,First Name,Last Name,Full Name,DateofBirth,Age,Email,
-     * Contact Phone Number,Personal Phone Number,JobTitle,DepartmentID,
-     * HireDate,EmploiementType,Salary,SalaryBand,BonusEligibiity
-     */
     public static List<EmployeePlain> loadCsv(Path path) throws Exception {
         List<EmployeePlain> employees = new ArrayList<>();
 
@@ -37,7 +31,8 @@ public final class DatasetLoader {
 
             String line;
             while ((line = reader.readLine()) != null) {
-                if (line.isBlank()) continue;
+                if (line.isBlank())
+                    continue;
 
                 String[] c = splitCsvLine(line);
 
@@ -74,10 +69,6 @@ public final class DatasetLoader {
         return columns[i].trim();
     }
 
-    /*
-     * Small CSV splitter that supports quoted commas.
-     * Your current dataset is simple, but this is safer than String.split(",").
-     */
     private static String[] splitCsvLine(String line) {
         List<String> values = new ArrayList<>();
         StringBuilder current = new StringBuilder();

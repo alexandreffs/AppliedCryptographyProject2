@@ -8,29 +8,15 @@ import pa2.server.QueryService;
 import java.math.BigInteger;
 import java.util.List;
 
-/**
- * Fixed test client for running all 11 required project operations
- * automatically.
- *
- * Run after Bootstrap:
- *
- * mvn exec:java -Dexec.mainClass="pa2.client.FixedTestsClientApp"
- */
+// mvn exec:java -Dexec.mainClass="pa2.client.FixedTestsClientApp"
 public class FixedTestsClientApp {
 
-    /*
-     * Change these values if your dataset does not contain them.
-     */
     private static final String TEST_EMPLOYEE_ID = "EMP1001";
     private static final String TEST_FULL_NAME_A = "Emma Johnson";
     private static final String TEST_FULL_NAME_B = "John Smith";
     private static final String TEST_DEPARTMENT_ID = "DPT109";
 
-    /*
-     * 110 means 1.10 USD/EUR.
-     * 105 means 1.05 USD/EUR.
-     * 120 means 1.20 USD/EUR.
-     */
+    // 110 means 1.10 USD/EUR
     private static final int TEST_USD_EXCHANGE_RATE_SCALED = 110;
 
     public static void main(String[] args) throws Exception {

@@ -57,8 +57,7 @@ public class QueryService {
 
     public String departmentPayrollSum(
             String departmentIDIndex,
-            PaillierCrypto.PublicKey publicKey
-    ) throws Exception {
+            PaillierCrypto.PublicKey publicKey) throws Exception {
         List<EmployeeEncrypted> employees = searchByDepartmentID(departmentIDIndex);
 
         if (employees.isEmpty()) {
@@ -78,10 +77,9 @@ public class QueryService {
 
     public List<String> bonusesForEligibleEmployees(
             String bonusEligibilityIndex,
-            PaillierCrypto.PublicKey publicKey
-    ) throws Exception {
-        List<EmployeeEncrypted> employees =
-                repository.findManyByToken("bonus_eligibility_index", bonusEligibilityIndex);
+            PaillierCrypto.PublicKey publicKey) throws Exception {
+        List<EmployeeEncrypted> employees = repository.findManyByToken("bonus_eligibility_index",
+                bonusEligibilityIndex);
 
         List<String> encryptedBonuses = new ArrayList<>();
 
@@ -104,8 +102,7 @@ public class QueryService {
     public String salaryConvertedWithScaledRate(
             String fullNameIndex,
             int scaledExchangeRate,
-            PaillierCrypto.PublicKey publicKey
-    ) throws Exception {
+            PaillierCrypto.PublicKey publicKey) throws Exception {
         EmployeeEncrypted employee = searchByFullName(fullNameIndex);
 
         if (employee == null) {
@@ -114,12 +111,6 @@ public class QueryService {
 
         BigInteger encryptedSalary = new BigInteger(employee.salaryPaillier);
 
-        /*
-         * Example:
-         * scaledExchangeRate = 110 means multiplying by 1.10.
-         * Server computes Enc(salary * 110).
-         * Client decrypts and divides by 100.
-         */
         return encryptedSalary
                 .modPow(BigInteger.valueOf(scaledExchangeRate), publicKey.nSquared)
                 .toString();

@@ -64,7 +64,8 @@ public class QueryClient {
     public BigInteger departmentPayrollSum(String departmentID) throws Exception {
         String token = HMACIndex.token(departmentID, keys.indexKey);
         String encryptedSum = server.departmentPayrollSum(token, keys.paillierPublicKey);
-        if (encryptedSum == null) return BigInteger.ZERO;
+        if (encryptedSum == null)
+            return BigInteger.ZERO;
 
         PaillierCrypto paillier = new PaillierCrypto();
         return paillier.decrypt(new BigInteger(encryptedSum), keys.paillierPublicKey, keys.paillierPrivateKey);
@@ -82,7 +83,8 @@ public class QueryClient {
              * Server returns Enc(salary * 25).
              * Client divides by 100 after decryption.
              */
-            BigInteger scaled = paillier.decrypt(new BigInteger(encrypted), keys.paillierPublicKey, keys.paillierPrivateKey);
+            BigInteger scaled = paillier.decrypt(new BigInteger(encrypted), keys.paillierPublicKey,
+                    keys.paillierPrivateKey);
             bonuses.add(scaled.divide(BigInteger.valueOf(100)));
         }
 
@@ -93,16 +95,13 @@ public class QueryClient {
         String token = HMACIndex.token(fullName, keys.indexKey);
         String encrypted = server.salaryConvertedWithScaledRate(token, scaledExchangeRate, keys.paillierPublicKey);
 
-        if (encrypted == null) return null;
+        if (encrypted == null)
+            return null;
 
         PaillierCrypto paillier = new PaillierCrypto();
-        BigInteger scaled = paillier.decrypt(new BigInteger(encrypted), keys.paillierPublicKey, keys.paillierPrivateKey);
+        BigInteger scaled = paillier.decrypt(new BigInteger(encrypted), keys.paillierPublicKey,
+                keys.paillierPrivateKey);
 
-        /*
-         * Example:
-         * scaledExchangeRate = 110 means 1.10 USD.
-         * Decrypted value is salary * 110, so divide by 100.
-         */
         return scaled.divide(BigInteger.valueOf(100));
     }
 

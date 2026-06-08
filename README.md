@@ -71,44 +71,6 @@ BonusEligibiity
 
 ---
 
-## Project Structure
-
-```text
-src/main/java/pa2/
-├── client/
-│   ├── Bootstrap.java
-│   ├── InteractiveClientApp.java
-│   ├── FixedTestsClientApp.java
-│   ├── DatasetLoader.java
-│   ├── EmployeeEncryptor.java
-│   ├── QueryClient.java
-│   ├── PerformanceUtils.java
-│   └── CryptoMetrics.java
-│
-├── config/
-│   └── DbConfig.java
-│
-├── crypto/
-│   ├── AESCrypto.java
-│   ├── ClientKeys.java
-│   ├── ECDSAUtils.java
-│   ├── HMACIndex.java
-│   ├── IntegrityUtils.java
-│   ├── OPECrypto.java
-│   └── PaillierCrypto.java
-│
-├── model/
-│   ├── EmployeePlain.java
-│   ├── EmployeeEncrypted.java
-│   └── EmployeeDecrypted.java
-│
-└── server/
-    ├── EmployeeRepository.java
-    └── QueryService.java
-```
-
----
-
 ## Cryptographic Design
 
 Different cryptographic techniques are used depending on the operation required for each attribute.
